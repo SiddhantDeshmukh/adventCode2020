@@ -1,8 +1,12 @@
+import os
+import pathlib
+
 import numpy as np
 import pandas as pd
 
 
 # Get data
+os.chdir(pathlib.Path(__file__).parent)
 nums = np.array(pd.read_csv("../data/day_1.txt", header=None)[0])
 
 
@@ -12,7 +16,7 @@ for num in nums:
         print("Day 1, Part 1:", num * (2020 - num))
         break
 
-
+        
 # Part 2
 stop = 0
 for i, num in enumerate(nums):

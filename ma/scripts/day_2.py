@@ -1,3 +1,5 @@
+import os
+import pathlib
 import warnings
 
 import pandas as pd
@@ -6,11 +8,9 @@ import pandas as pd
 warnings.filterwarnings("ignore")
 
 
-# Get data
+# Get data and preprocess
+os.chdir(pathlib.Path(__file__).parent)
 codes = pd.read_csv("../data/day_2.txt", header=None)
-
-
-# Preprocess
 codes.rename({0: "code"}, axis=1, inplace=True)
 
 codes["min_num"] = [i[:i.find("-")] for i in codes["code"]]
