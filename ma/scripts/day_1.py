@@ -11,8 +11,9 @@ nums = np.array(pd.read_csv("../data/day_1.txt", header=None)[0])
 
 
 # Part 1
-for num in nums:
-    if np.any(nums == 2020 - num):
+for i, num in enumerate(nums):
+    nums_2 = np.delete(nums, i)
+    if np.any(nums_2 == 2020 - num):
         print("Day 1, Part 1:", num * (2020 - num))
         break
 
