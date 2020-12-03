@@ -2,14 +2,14 @@
 
 
 def test_valid_password(pass_string, rule_set="range"):
-    """Rule is given as [count of occurances range] [letter]: [password]"""
+    """pass_string given as [count of occurances range] [letter]: [password]"""
     # Split up the password string into counts, letter, password
     nums, letter, pwd = pass_string.split(" ")
     # Clean each element
     nums = [int(n) for n in nums.split("-")]
     letter = letter.replace(":", "")
     pwd = pwd.replace("\n", "")
-    # Perform password test
+    # Perform password test, specified by rule_set
     validity_result = eval(RULES[rule_set])
     return int(validity_result)
 
