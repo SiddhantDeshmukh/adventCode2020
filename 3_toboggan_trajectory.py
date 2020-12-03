@@ -1,5 +1,4 @@
-# Given the map of terrain in "3_toboggan_map.txt", which repeats to the right,
-# work out how many trees you would encounter going:
+# Given the map of terrain in "3_toboggan_map.txt", which repeats to the right
 import numpy as np
 
 
@@ -19,6 +18,7 @@ with open("rsc/3_toboggan_map.txt") as map:
     map_store[np.where(map_store == ".")] = 0
     map_store = map_store.astype(int)
 
+# Store tree counts for these step combinations (RIGHT, DOWN)
 steps = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
 trees = [count_routes_trees(map_store, d, r) for r, d in steps]
 

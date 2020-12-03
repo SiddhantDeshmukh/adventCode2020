@@ -30,7 +30,7 @@ print(f"Part 2: {three_solution}")
 
 # Timing; for fun!
 n_runs = 10
-setup = """from __main__ import target_sum_product_old, expenses"""
-run = """target_sum_product_old(expenses)"""
+setup = """from __main__ import target_sum_product_two, expenses"""
+run = """target_sum_product_two(expenses)"""
 a = timeit(setup=setup, stmt=run, number=n_runs)/n_runs
 print(a)
