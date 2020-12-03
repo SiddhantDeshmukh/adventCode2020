@@ -2,7 +2,7 @@
 
 
 def test_valid_password(pass_string, rule_set="range"):
-    """pass_string given as [count of occurances range] [letter]: [password]"""
+    """pass_string given as [number range] [letter]: [password]"""
     # Split up the password string into counts, letter, password
     nums, letter, pwd = pass_string.split(" ")
     # Clean each element
