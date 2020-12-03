@@ -1,5 +1,4 @@
-# Read in password file and determine how many don't fit the rule
-# Rule is given as [number of occurances range] [letter]: [password]
+# Read in password file and determine how many don't fit the different rules
 
 
 def extract_password_content(password_line):
@@ -13,6 +12,7 @@ def extract_password_content(password_line):
 
 
 def test_valid_range(pass_string, show=False):
+    """Rule is given as [count of occurances range] [letter]: [password]"""
     # Extract the data for this password string
     counts, letter, password = extract_password_content(pass_string)
     # Perform password test
@@ -27,6 +27,7 @@ def test_valid_range(pass_string, show=False):
 
 
 def test_valid_position(pass_string, show=False):
+    """Rule is given as [exlusive positions] [letter]: [password]"""
     # Extract the data for this password string
     pos, letter, pwd = extract_password_content(pass_string)
     # Perform password test
