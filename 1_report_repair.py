@@ -21,12 +21,10 @@ def target_sum_product_three(number_list, target_sum=2020):
 
 # Read in expenses
 expenses = pd.read_csv("rsc/1_expenses.csv", header=None)[0].values
-two_solution = target_sum_product_two(expenses)
-three_solution = target_sum_product_three(expenses)
 
 # Problem Solutions
-print(f"Part 1: {two_solution}")
-print(f"Part 2: {three_solution}")
+print(f"Part 1: {target_sum_product_two(expenses)}")
+print(f"Part 2: {target_sum_product_three(expenses)}")
 
 # Timing; for fun!
 n_runs = 10
