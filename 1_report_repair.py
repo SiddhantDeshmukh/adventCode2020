@@ -4,7 +4,6 @@
 # sed '$!s/$/,/' original.csv > corrected.csv
 from itertools import product
 from timeit import timeit
-import pandas as pd
 
 
 def target_sum_product_two(number_list, target_sum=2020):
@@ -20,7 +19,8 @@ def target_sum_product_three(number_list, target_sum=2020):
 
 
 # Read in expenses
-expenses = pd.read_csv("rsc/1_expenses.csv", header=None)[0].values
+with open("rsc/1_expenses.txt") as expenses_file:
+    expenses = [int(n) for n in expenses_file.read().split("\n")]
 
 # Problem Solutions
 print(f"Part 1: {target_sum_product_two(expenses)}")
