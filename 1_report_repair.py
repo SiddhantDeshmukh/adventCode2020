@@ -1,7 +1,4 @@
 # Find the numbers in the list that sum to 2020, and get the product
-# Input file is expenses .csv
-# converted copied values to .csv by:
-# sed '$!s/$/,/' original.csv > corrected.csv
 from itertools import product
 from timeit import timeit
 
