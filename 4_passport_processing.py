@@ -10,9 +10,12 @@ def check_valid_passport(passport_string, field_valid=False):
     valid_test = all(item in clean_fields for item in FIELD_RULES)
     # If has required fields and data validation needed, check validation rules 
     if valid_test and field_valid:
+        # Try each of the field rules
         for field in FIELD_RULES:
+            # Extract this field's value (v)
             v = clean_fields[field]
             valid_test = eval(FIELD_RULES[field])
+            # If a test fails, don't try the rest
             if not valid_test: break
     return valid_test
 
@@ -43,4 +46,3 @@ for passport in passports:
 # Problem Solutions
 print(f"Part 1: {correct_fields} passwords with 'correct' fields")
 print(f"Part 2: {valid_fields} passwords with 'correct' and validated fields")
-
