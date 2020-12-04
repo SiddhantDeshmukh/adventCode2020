@@ -42,41 +42,18 @@ function isValidField(passport, field) {
   // Check validity of individual fields
   let value = passport[field];
   let isValid = true;
-
-  switch(field) {
-    case 'byr':
-      isValid = isValidByr(value);
-      break;
-  
-    case 'iyr':
-      isValid = isValidIyr(value);
-      break;
-    
-    case 'eyr':
-      isValid = isValidEyr(value);
-      break;
-
-    case 'hgt':
-      isValid = isValidHgt(value);
-      break;
-      
-    case 'hcl':
-      isValid = isValidHcl(value);
-      break;
-    
-    case 'ecl':
-      console.log(value);
-      isValid = isValidEcl(value);
-      break;
-    
-    case 'pid':
-      isValid = isValidPid(value);
-      break;
-
-    case 'cid':
-      isValid = true;
-      break;
+  const fieldFunctionMap = {
+    'byr': isValidByr,
+    'iyr': isValidIyr,
+    'eyr': isValidEyr,
+    'hgt': isValidHgt,
+    'hcl': isValidHcl,
+    'ecl': isValidEcl,
+    'pid': isValidPid,
+    'cid': true
   }
+
+  isValid = fieldFunctionMap[field](value);
 
   return isValid;
 
@@ -84,9 +61,9 @@ function isValidField(passport, field) {
 
 function isValidPassport(passportString) {
   // Ignore 'cid'
-  requiredFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
+  const requiredFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
 
-  passport = JSON.parse(passportString);
+  let passport = JSON.parse(passportString);
   let isValid = true;
   
   requiredFields.every(field => {
@@ -114,16 +91,18 @@ function isValidPassport(passportString) {
 function keyValueStringFromField(field) {
   let key, value;
   [key, value] = field.split(':');
-  keyValueString = `\"${key}\":\"${value}\"`;
+  let keyValueString = `\"${key}\":\"${value}\"`;
 
   return keyValueString;
 }
 
 
 try {
-  data = fs.readFileSync(passportFile, 'utf-8');
+  const data = fs.readFileSync(passportFile, 'utf-8');
   const lines = data.split(/\r?\n/);
 
+  // Add an empty line to the end of 'lines' if the file does not contain
+  // empty line at the end
   if (lines[-1] != '') {
     lines.push('');
   }
