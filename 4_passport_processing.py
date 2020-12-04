@@ -2,9 +2,9 @@
 # Valid rule for step 1 is must contain all 8 fields OR all fields except cid
 
 def check_valid_passport(passport_string, field_valid=False):
-    # Replace \n with " " and separate groups
+    # Separate fields from passport_string
     clean_passport = passport_string.replace("\n", " ").split(" ")
-    # Extract fields
+    # Extract data from each field into dictionary
     clean_fields = {f.split(":")[0]:f.split(":")[1] for f in clean_passport}
     # Check if the required fields are present
     valid_test = all(item in clean_fields for item in FIELD_RULES)
