@@ -18,7 +18,7 @@ RULES = {"range": "nums[0] <= pwd.count(letter) <= nums[1]",
         "position": "(pwd[nums[0]-1] == letter) ^ (pwd[nums[1]-1] == letter)"}
 
 # Read in file line by line
-with open("rsc/2_passwords.csv") as password_file:
+with open("rsc/2_passwords.txt") as password_file:
     range_valid_count, position_valid_count = 0, 0
     for line in password_file.readlines():
         range_valid_count += test_valid_password(line, rule_set="range")
