@@ -2,15 +2,13 @@
 
 
 def check_passport(passport_string, validate_fields=False):
-    # Separate fields from passport_string
+    # Separate fields from passport_string into dictionary
     clean_passport = passport_string.replace("\n", " ").split(" ")
-    # Extract data from each field into dictionary
     clean_fields = {f.split(":")[0]:f.split(":")[1] for f in clean_passport}
     # Check if the required fields are present
     valid_test = all(item in clean_fields for item in FIELD_RULES)
-    # If has required fields and data validation needed, check validation rules 
+    # If has fields and data validation needed, check each validation rule 
     if valid_test and validate_fields:
-        # Try each of the field rules
         for field in FIELD_RULES:
             # Extract field value (v) and evaluate rule
             v = clean_fields[field]
