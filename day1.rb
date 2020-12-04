@@ -26,8 +26,12 @@ class EntryScanner
       result = entries.find { |other_entry| other_entry + entry == target_sum }
     end
 
-    puts "#{entry} + #{result} = #{target_sum}"
-    puts "#{entry} x #{result} = #{entry * result}"
+    if result.nil?
+      puts "Could not find a pair that adds up to #{target_sum} in the collection."
+    else
+      puts "#{entry} + #{result} = #{target_sum}"
+      puts "#{entry} x #{result} = #{entry * result}"
+    end
   end
 
   private
