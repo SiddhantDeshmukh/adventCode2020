@@ -17,21 +17,19 @@
 # them together?
 
 class EntryScanner
-  PATH_TO_DATASET_FILE = './day1_dataset.txt'
+  def initialize(path_to_dataset_file:)
+    @path_to_dataset_file = path_to_dataset_file
+  end
 
-  def execute(target_sum:)
+  def find_pair_that_adds_up_to(target_sum)
     result = nil
     while result.nil? && !(entry = entries.shift).nil?
       next unless entries.count > 0
       result = entries.find { |other_entry| other_entry + entry == target_sum }
     end
 
-    if result.nil?
-      puts "Could not find a pair that adds up to #{target_sum} in the collection."
-    else
-      puts "#{entry} + #{result} = #{target_sum}"
-      puts "#{entry} x #{result} = #{entry * result}"
-    end
+    return nil unless !result.nil?
+    return [entry, result]
   end
 
   private
@@ -41,8 +39,21 @@ class EntryScanner
   end
 
   def read_dataset
-    File.open(PATH_TO_DATASET_FILE).read
+    File.open(@path_to_dataset_file).read
   end
 end
 
-EntryScanner.new.execute(target_sum: 2020)
+# =========================================
+
+PATH_TO_DATASET_FILE = './day1_dataset.txt'
+TARGET_SUM = 2020
+
+scanner = EntryScanner.new(path_to_dataset_file: PATH_TO_DATASET_FILE)
+pair = scanner.find_pair_that_adds_up_to(TARGET_SUM)
+
+if pair.nil?
+  puts "Could not find a pair that adds up to #{TARGET_SUM}."
+else
+  puts "#{pair[0]} + #{pair[1]} = #{TARGET_SUM}"
+  puts "#{pair[0]} x #{pair[1]} = #{pair[0] * pair[1]}"
+end
