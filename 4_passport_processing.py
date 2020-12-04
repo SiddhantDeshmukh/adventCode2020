@@ -1,5 +1,5 @@
 # Read in passports file and determine which passport entries are "valid"
-# Valid rule for step 1 is must contain all 8 fields OR all fields except cid
+
 
 def check_passport(passport_string, validate_fields=False):
     # Separate fields from passport_string
