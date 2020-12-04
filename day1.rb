@@ -28,7 +28,7 @@ class EntryScanner
       result = entries.find { |other_entry| other_entry + entry == target_sum }
     end
 
-    return nil unless !result.nil?
+    return nil if result.nil?
     return [entry, result]
   end
 
