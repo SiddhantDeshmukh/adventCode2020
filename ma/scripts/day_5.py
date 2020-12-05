@@ -12,7 +12,7 @@ ids.rename({0: "id"}, axis=1, inplace=True)
 
 
 # Part 1
-def binary_split(id_, min_bin, max_bin, lower_half):
+def binary_split(id_: str, min_bin: int, max_bin: int, lower_half: str) -> int:
     for j in range(len(id_)):
         if id_[j] == lower_half:
             max_bin = (min_bin + max_bin - 1) / 2
