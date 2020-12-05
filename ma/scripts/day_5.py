@@ -12,24 +12,20 @@ ids.rename({0: "id"}, axis=1, inplace=True)
 
 
 # Part 1
+def binary_split(id_, min_bin, max_bin, lower_half):
+    for j in range(len(id_)):
+        if id_[j] == lower_half:
+            max_bin = (min_bin + max_bin - 1) / 2
+        else:
+            min_bin = (min_bin + max_bin + 1) / 2      
+    return int(min_bin)
+
+
 ids["row"], ids["seat"] = None, None
 for i, id_ in enumerate(ids["id"]):
-    row_min, row_max = 0, 127
-    for j in range(7):
-        if id_[j] == "F":
-            row_max = (row_min + row_max - 1) / 2
-        else:
-            row_min = (row_min + row_max + 1) / 2
-    ids["row"][i] = int(row_min)
-        
-    seat_min, seat_max = 0, 7
-    for j in range(7, 10):
-        if id_[j] == "L":
-            seat_max = (seat_min + seat_max - 1) / 2
-        else:
-            seat_min = (seat_min + seat_max + 1) / 2
-    ids["seat"][i] = int(seat_min)   
-    
+    ids["row"][i] = binary_split(id_[:7], 0, 127, "F")
+    ids["seat"][i] = binary_split(id_[7:], 0, 7, "L")  
+
 ids["seat_id"] = ids["row"] * 8 + ids["seat"]
 print("Day 5, Part 1:", ids["seat_id"].max())
 
