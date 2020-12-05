@@ -19,10 +19,12 @@ RULES = {"range": "nums[0] <= pwd.count(letter) <= nums[1]",
 
 # Read in file line by line
 with open("rsc/2_passwords.txt") as password_file:
-    range_valid_count, position_valid_count = 0, 0
-    for line in password_file.readlines():
-        range_valid_count += test_valid_password(line, rule_set="range")
-        position_valid_count += test_valid_password(line, rule_set="position")
+    passwords = password_file.read().split("\n")
+
+range_valid_count, position_valid_count = 0, 0
+for password in passwords:
+    range_valid_count += test_valid_password(password, rule_set="range")
+    position_valid_count += test_valid_password(password, rule_set="position")
 
 # Problem Solutions
 print(f"Part 1: {range_valid_count} are valid")
