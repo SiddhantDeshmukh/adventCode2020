@@ -15,11 +15,10 @@ class Tree():
 
 def decode_boardingpass(pass_string):
     """Decode row, col and id from boarding pass string using decoder trees"""
-    # Get row from first 7 characters
-    row_eval = pass_string[0:7].replace("F", ".L").replace("B", ".U")
+    # Get row and column eval strings from pass_string
+    row_eval = pass_string[:7].replace("F", ".L").replace("B", ".U")
+    col_eval = pass_string[7:].replace("L", ".L").replace("R", ".U")
     row = eval(f"ROW_TREE{row_eval}.value")
-    # Get column from last 3 characters
-    col_eval = pass_string[7:10].replace("L", ".L").replace("R", ".U")
     col = eval(f"COL_TREE{col_eval}.value")
     # Return ID for this seat
     return (row * 8) + col
@@ -35,7 +34,6 @@ with open("rsc/5_boarding_passes.txt") as boarding_passes:
 
 # Calculate the seat ids for each
 ids = [decode_boardingpass(boarding_pass) for boarding_pass in passes]
-
 # Find the missing id (mine) by removing sum of full range from sum of ids
 missing = sum(range(min(ids), max(ids)+1)) - sum(ids)
 
