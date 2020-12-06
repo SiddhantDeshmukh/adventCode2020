@@ -45,7 +45,7 @@ function isValidPuzzle2(line) {
   return (numOccurrences == 1 ? true: false);
 }
 
-passwordFile = '../res/day2.txt';
+passwordFile = './day2.txt';
 
 try {
   const data = fs.readFileSync(passwordFile, 'utf8');

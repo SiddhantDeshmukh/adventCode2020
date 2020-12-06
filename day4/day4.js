@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 
-passportFile = '../res/day4.txt';
+passportFile = './day4.txt';
 
 // Conditions for valid fields
 const isValidByr = (value) => (value.length == 4) && (1920 <= value) && (value <= 2002);

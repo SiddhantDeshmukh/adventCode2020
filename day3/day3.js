@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 
-treeFile = '../res/day3.txt';
+treeFile = './day3.txt';
 treeCharacter = '#'
 
 function convertTo2DArray(lines) {

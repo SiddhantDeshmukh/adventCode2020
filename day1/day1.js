@@ -7,7 +7,7 @@
 const fs = require('fs');
 const { PerformanceObserver, performance } = require('perf_hooks');
 
-input_file = "../res/day1.txt";
+input_file = "./day1.txt";
 
 // (Puzzle 1)
 console.log("Puzzle 1");
