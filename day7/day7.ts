@@ -3,9 +3,11 @@ const fs = require('fs');
 // Custom type for Bag
 type Bag = { amount: number, colour: string }
 
+// Remake to just use colour as the property
+// Amount is the number of vertices to make
 class DirectedGraph {
   numVertices: number;
-  adjacencyList: Map<Bag, Array<Bag> >;
+  adjacencyList: Map <string, Array <Bag> >;
 
   constructor (numVertices: number) {
     // Each Graph has a number of vertices and an adjacencyList for
@@ -16,13 +18,13 @@ class DirectedGraph {
 
   addVertex(v: Bag) {
     // Add a vertex, initialising the adjacent list with an empty array
-    this.adjacencyList.set(v, []);
+    this.adjacencyList.set(v.colour, []);
   }
 
   addEdge(v: Bag, w: Bag) {
     // Get adjacent list for vertex 'v' and add the vertex 'w' to denote
     // an edge v -> w (assumes directed graph)
-    this.adjacencyList.get(v).push(w);
+    this.adjacencyList.get(v.colour).push(w);
   }
 
   printGraph() {
@@ -33,13 +35,78 @@ class DirectedGraph {
       let adjacencyList = ""
 
       for (let value of values) {
-        adjacencyList += `${value.amount} ${value.colour}, `;
+        adjacencyList += `${value}\t`;
       }
 
       // Print vertex and adjacency list
-      console.log(`Vertex ${key.colour} -> ` + adjacencyList);
+      console.log(`Vertex ${key} -> ` + adjacencyList);
     }
+
+    console.log(`Adjacency list map size: ${this.adjacencyList.size}.`);
+    console.log(`Adjacency list keys length: ${[...this.adjacencyList.keys()].length}.`);
   }
+}
+
+// Find a path to 'SearchColour' using DFS and return it
+function searchForColour(graph: DirectedGraph, vertex: string,
+    searchColour: string, verbose: boolean) {
+  let stack: Array <string> = [vertex];  // LIFO
+  let visited: Array <string> = [vertex];
+
+  while (stack.length > 0) {
+    const current: string = stack.pop();
+
+    if (current === searchColour) {
+      if (verbose) {
+        console.log(`Found ${searchColour} when starting from ${vertex}.`);
+      }
+
+      return visited;
+    }
+
+    // Add neighbours
+    let neighbours: Array <Bag> = graph.adjacencyList.get(current);
+
+    neighbours.forEach((neighbour: Bag) => {
+      if (!visited.includes(neighbour.colour) && (neighbour.colour != 'no other')) {
+        visited.push(neighbour.colour);
+        stack.push(neighbour.colour);
+      }
+    });
+  }
+
+  if (verbose) {
+    console.log(`Did not find ${searchColour} when starting from ${vertex}.`);
+  }
+
+  return [];
+}
+
+// Traverse entire tree and tally up amounts
+// Recursive function
+function tallyBags(graph: DirectedGraph, vertex: Bag) {
+  let tally: number = 0;
+  let childBags: Array <Bag> = graph.adjacencyList.get(vertex.colour);
+
+  childBags.forEach((childBag: Bag) => {
+    if (childBag.colour != 'no other') {
+      tally += childBag.amount;
+
+      // Make this child the temporary parent in order to calculate future
+      // amounts accurately
+      const tempParentAmount: number = childBag.amount;
+      
+      // Recursively tally bags under this child node
+      let subTally: number = tallyBags(graph, childBag);
+
+      if (subTally > 0) {
+        subTally *= tempParentAmount;
+        tally += subTally;
+      }
+    }
+  });
+
+  return tally;
 }
 
 const rulesFile = './day7.txt'
@@ -57,7 +124,7 @@ function splitRuleIntoBags(rule: string) {
 
   // Create host bag
   // Strip whitespace
-  colour = colour.split(' ').join('')
+  colour = colour.trim();
 
   let amount: number = 1;
   let parentBag: Bag = {amount, colour};
@@ -73,7 +140,7 @@ function splitRuleIntoBags(rule: string) {
   // Create a Bag object for each 'containedBag'
   childBags.forEach((containedBag: string) => {
     let amount: number = parseInt(containedBag);
-    let colour: string = containedBag.replace(/\d/, '').split(' ').join('');
+    let colour: string = containedBag.replace(/\d/, '').trim();
     
     let bag: Bag = {amount, colour};
     ruleBags.push(bag);
@@ -82,11 +149,11 @@ function splitRuleIntoBags(rule: string) {
   return ruleBags;
 }
 
-function countUniqueBags(rulesList: Array<string>) {
+function getUniqueColours(rulesList: Array<string>) {
   // Check the number of unique colours in the input data
   let uniqueColours: Array<string> = []
   rulesList.forEach(rule => {
-    let colour = rule.split('bags contain')[0].split(' ').slice(0, 3).join('');
+    let colour = rule.split('bags contain')[0].split(' ').slice(0, 3).join(' ').trim();
 
     if (!uniqueColours.includes(colour)) {
       uniqueColours.push(colour);
@@ -95,13 +162,14 @@ function countUniqueBags(rulesList: Array<string>) {
   let numUniqueBags = uniqueColours.length;
   console.log(`Out of ${rulesList.length} rules, there are ${numUniqueBags} unique colours.`);
 
-  return numUniqueBags;
+  return uniqueColours;
 }
 
 // Read in data and parse each rule (line)
 let rulesList = fs.readFileSync(rulesFile, 'utf-8').split('\n');
 
-let numUniqueBags = countUniqueBags(rulesList);
+let uniqueColours = getUniqueColours(rulesList);
+let numUniqueBags = uniqueColours.length;
 
 // Create Graph
 let graph = new DirectedGraph(numUniqueBags);
@@ -117,9 +185,38 @@ rulesList.forEach((rule: string) => {
   let edges = bags.slice(1);
 
   edges.forEach(edge => {
-    graph.addEdge(bags[0], edge);
+    for (let i = 0; i < 1; i++) {
+      graph.addEdge(bags[0], edge);
+    }
   });
 });
 
 // Warning: BIG print
-graph.printGraph();
+// graph.printGraph();
+
+// Puzzle 1: Traverse graph and find all unique 'shiny gold' bags
+let searchColour: string = "shiny gold";
+console.log("Depth first");
+
+let numFound = 0;
+
+uniqueColours.forEach((colour: string) => {
+  if (colour != searchColour) {
+    let verbose: boolean = false;
+    let nodes: Array <string> = searchForColour(graph, colour, searchColour, verbose);
+  
+    if (nodes.length > 0) {
+      numFound++;
+    }
+  }
+});
+
+console.log(`${numFound} ${searchColour} bags found.`);
+
+// Puzzle 2: Start from a colour and count how many bags are contained
+// within that one bag
+let amount: number = 1, colour: string = "shiny gold";
+let parentBag: Bag = { amount, colour };
+let tally: number = tallyBags(graph, parentBag);
+
+console.log(`Starting from ${parentBag.colour}, there are ${tally} bags.`);
