@@ -1,3 +1,8 @@
+/*
+ * Disclaimer: This script contains really terrible code. Do not ever write
+ * code like this. Please.
+*/
+
 const fs = require('fs');
 
 
