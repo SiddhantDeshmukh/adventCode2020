@@ -1,4 +1,3 @@
-"""Not the most elegant solution but it works"""
 import os
 import pathlib
 import warnings
@@ -46,15 +45,14 @@ print("Day 7, Part 1:", len(np.unique(bag_list)))
 
 
 # Part 2
-count = 0
 bags_df.index = bags_df["bag"]
 def bag_count(bag):
     bag_row = bags_df.loc[bag][1:]  # [1:] to get rid of 'bag' column
     count = bag_row.sum()
     if count == 0:  # Base case (i.e. final stop of recursion)
         return count
-    new_bags = list(bags_df[bag_row > 0].index)  # bags contained in current bag
-    for new_bag in new_bags:
+    # bags contained in current bag
+    for new_bag in list(bags_df[bag_row > 0].index):
         count += bag_row[new_bag] * bag_count(new_bag)  # recursion!
     return count
 print("Day 7, Part 2:", bag_count("shiny gold"))
