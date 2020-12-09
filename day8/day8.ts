@@ -1,6 +1,8 @@
 /*
  * Disclaimer: This script contains really terrible code. Do not ever write
- * code like this. Please.
+ * code like this. Please. If you need a function called 'resetGlobals()'
+ * and have multiple infinite loops to break out of, close your text
+ * editor, delete the directory and start over.
 */
 
 const fs = require('fs');
