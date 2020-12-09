@@ -43,10 +43,11 @@ def contiguous_sum_minmax(array, target, max_contig_len = 50):
 #     https://www.reddit.com/r/adventofcode/comments/k9nkhp/2020_day_9_python3x_possible_optimisations_for_my/
 #     which is slightly faster, but should scale a lot better for larger arrays
 #     """
-#     low_ind, high_ind = 0, 0
 #     # Precalc cumulative sums
 #     csum = [sum(array[:ind]) for ind in range(len(array))]
-#     # Iteratively increase i to make sum larger and chase with j if over target
+#     # Iteratively increase low_ind to make sum larger and chase with high_ind 
+#     # if over target until solution found
+#     low_ind, high_ind = 0, 0
 #     while csum[high_ind] - csum[low_ind] != target:
 #         if csum[high_ind] - csum[low_ind] <= target:
 #             high_ind += 1
