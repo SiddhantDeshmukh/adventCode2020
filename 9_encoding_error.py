@@ -37,6 +37,23 @@ def contiguous_sum_minmax(array, target, max_contig_len = 50):
                 return min(valid_range) + max(valid_range)
     return False
 
+# def contiguous_sum_minmax_reddit(array, target):
+#     """Find contiguous sub-array that sums to target, return sum(min/max)
+#     This is a solution adapted from the r/adventofcode reddit thread:
+#     https://www.reddit.com/r/adventofcode/comments/k9nkhp/2020_day_9_python3x_possible_optimisations_for_my/
+#     which is slightly faster, but should scale a lot better for larger arrays
+#     """
+#     low_ind, high_ind = 0, 0
+#     # Precalc cumulative sums
+#     csum = [sum(array[:ind]) for ind in range(len(array))]
+#     # Iteratively increase i to make sum larger and chase with j if over target
+#     while csum[high_ind] - csum[low_ind] != target:
+#         if csum[high_ind] - csum[low_ind] <= target:
+#             high_ind += 1
+#         else:
+#             low_ind += 1
+#     array_range = array[low_ind:high_ind]
+#     return min(array_range) + max(array_range)
 
 # Read in the data stream
 with open("rsc/9_encoded_stream.txt") as stream:
