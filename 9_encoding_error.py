@@ -41,6 +41,7 @@ def contiguous_sum_minmax(array, target, max_contig_len = 50):
 # Read in the data stream
 with open("rsc/9_encoded_stream.txt") as stream:
     encoded = [int(s) for s in stream.read().split("\n")]
+    # encoded = list(map(int, stream))  # Got this off the subreddit, so neat!
 
 # Part 1: Scan with a 25 long window, check next number is sum of two in window
 break_num = find_break_number(encoded, 25)
