@@ -28,7 +28,7 @@ def find_break_number(array, window_size = 25):
 
 
 def contiguous_sum_minmax(array, target, max_contig_len = 50):
-    # Try a large number of contig ranges
+    """Find contiguous sub-array that sums to target, return sum(min/max)"""
     for contig_length in range(2, max_contig_len):
         # Try all contiguous sequences of this length from the valid array
         for ind in range(len(array) - contig_length):
