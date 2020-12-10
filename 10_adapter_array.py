@@ -1,5 +1,4 @@
 # Create a rediculous chain of adapters to charge your phone
-# Every adapater must connect to one which is 1-3 higher that in
 
 # Read in adapter information
 with open("rsc/10_adapters.txt") as adapter_data:
