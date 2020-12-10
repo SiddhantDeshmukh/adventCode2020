@@ -41,6 +41,8 @@ function checkPreambleSums(preamble: Array <number>, value: number) {
   return false;
 }
 
+
+// Recursion?
 function findContiguousSetToSum(data: Array <number>, value: number) {
   // Find a contigious set of at least 2 numbers within 'data' that add to
   // 'value' and return the set
