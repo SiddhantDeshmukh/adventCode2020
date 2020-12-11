@@ -1,6 +1,11 @@
 const fs = require('fs');
-let joltageFile = './day10.txt';
+let joltageFile = './test2.txt';
 const countOccurrences = (array, value) => array.reduce((a, v) => (v === value ? a + 1 : a), 0);
+function pathsInArray(array) {
+    let n = (array.length > 2 ? array.length - 2 : 0);
+    let numPaths = (Math.pow(n, 2) + n + 2) / 2;
+    return numPaths;
+}
 try {
     let joltageList = fs.readFileSync(joltageFile, 'utf-8').split('\n');
     let joltages = [0];
@@ -18,13 +23,32 @@ try {
         intervals.push(interval);
         return true;
     });
-    let num1s = countOccurrences(intervals, 1);
-    let num2s = countOccurrences(intervals, 2);
-    let num3s = countOccurrences(intervals, 3);
-    console.log(`${num1s} 1 joltage differences.`);
-    console.log(`${num2s} 2 joltage differences.`);
-    console.log(`${num3s} 3 joltage differences.`);
-    console.log(`Puzzle 1: ${num1s * num3s}`);
+    for (let idx = 0; idx < 3; idx++) {
+        console.log(`${countOccurrences(intervals, idx + 1)} ${idx + 1} joltage differences.`);
+    }
+    console.log(`Puzzle 1: ${countOccurrences(intervals, 1) * countOccurrences(intervals, 3)}`);
+    let lazyCatererPaths = [];
+    for (let idx = 0; idx < joltages.length; idx++) {
+        let lookIdx = 1;
+        let prevIdx = idx;
+        let singleInterval = [joltages[idx]];
+        while (idx + lookIdx < joltages.length) {
+            if (joltages[idx + lookIdx] - joltages[prevIdx] == 1) {
+                singleInterval.push(joltages[idx + lookIdx]);
+            }
+            else {
+                break;
+            }
+            prevIdx++;
+            lookIdx++;
+        }
+        idx += singleInterval.length - 1;
+        if (singleInterval.length > 1) {
+            lazyCatererPaths.push(pathsInArray(singleInterval));
+        }
+    }
+    let maxPaths = lazyCatererPaths.reduce((a, v) => a * v);
+    console.log(`Puzzle 2: ${maxPaths} possible paths.`);
 }
 catch (error) {
     console.log(error);
