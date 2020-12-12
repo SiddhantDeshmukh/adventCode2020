@@ -30,8 +30,7 @@ with open("rsc/12_navigation_data.txt") as nav_data:
 ROT_TO_DIR = {0: "N", 90:"E", 180:"S", 270:"W"}
 DIR_TO_ROT = {"N":0, "E":90, "S":180, "W":270}
 # Part 1
-ship_pos1 = [0, 0]
-current_dir = "E"
+current_dir, ship_pos1 = "E", [0, 0]
 for dir, val in instruc:
     if dir in ["N", "S", "E", "W"]:
         ship_pos1 = move_point(ship_pos1, dir, val)
