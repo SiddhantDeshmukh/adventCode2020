@@ -13,12 +13,26 @@ fn main() -> Result<(), Box<dyn Error>> {
     match get_input(path) {
         Ok(input) => {
             
+            // First part, where two are the solution
             'outer: for i1 in 0..input.len() {
                 for i2 in 0..input.len() {
                     if input[i1] + input[i2] == TARGET && i1 != i2 {
                         println!("Found i1={} and i2={}. ", i1, i2);
-                        println!("Result: {}", input[i1] * input[i2]);
+                        println!("Result for sum of two: {}", input[i1] * input[i2]);
                         break 'outer;
+                    }
+                }
+            }
+
+            // Second part, where three are the solution. 
+            'outer: for i1 in 0..input.len() {
+                for i2 in 0..input.len() {
+                    for i3 in 0..input.len() {
+                        if input[i1] + input[i2] + input[i3] == TARGET && i1 != i2 && i2 != i3 {
+                            println!("Found i1={}, i2={} and i3={}. ", i1, i2, i3);
+                            println!("Result for sum of three: {}", input[i1] * input[i2] * input[i3]);
+                            break 'outer;
+                        }
                     }
                 }
             }
