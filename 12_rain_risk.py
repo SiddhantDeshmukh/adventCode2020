@@ -27,7 +27,7 @@ def rotate_point(point, degrees):
 with open("rsc/12_navigation_data.txt") as nav_data:
     instruc = [(l[0], int(l[1:])) for l in nav_data.read().split('\n')]
 
-ROT_TO_DIR = {0: "N", 90:"E", 180:"S", 270:"W"}
+ROT_TO_DIR = {0:"N", 90:"E", 180:"S", 270:"W"}
 DIR_TO_ROT = {"N":0, "E":90, "S":180, "W":270}
 # Part 1
 current_dir, ship_pos1 = "E", [0, 0]
