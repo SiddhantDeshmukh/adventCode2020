@@ -26,4 +26,4 @@ for offs, id in zip(offsets, bus_ids):
 
 # Problem Solutions
 print(f"Part 1: Product of wait-time and ID is {wait * bus_id}")
-print(f"Part 2: Tine when all busses leave in id-seqence is {t}")
+print(f"Part 2: Time when all busses leave in id-seqence is {t}")
