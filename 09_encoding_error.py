@@ -57,7 +57,7 @@ def contiguous_sum_minmax(array, target, max_contig_len = 50):
 #     return min(array_range) + max(array_range)
 
 # Read in the data stream
-with open("rsc/9_encoded_stream.txt") as stream:
+with open("rsc/09_encoded_stream.txt") as stream:
     encoded = [int(s) for s in stream.read().split("\n")]
     # encoded = list(map(int, stream))  # Got this off the subreddit, so neat!
 

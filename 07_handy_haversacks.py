@@ -19,7 +19,7 @@ def num_bags_inside(name):
 TARGET = "shiny gold"
 
 # Read in bag rules file
-with open("rsc/7_haversack_rules.txt") as bag_rules:
+with open("rsc/07_haversack_rules.txt") as bag_rules:
     ruleset = bag_rules.read().split('\n')
 
 # Parse all the rules into edge descriptions

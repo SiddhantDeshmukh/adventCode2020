@@ -1,7 +1,7 @@
 # Resolve the customs questions
 
 # Read in the file
-with open("rsc/6_customs_answers.txt") as customs_file:
+with open("rsc/06_customs_answers.txt") as customs_file:
     customs_answers = customs_file.read().split("\n\n")
 
 # Split the individual answers, count number of:

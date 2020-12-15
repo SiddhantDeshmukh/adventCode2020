@@ -18,7 +18,7 @@ RULES = {"range": "nums[0] <= pwd.count(letter) <= nums[1]",
         "position": "(pwd[nums[0]-1] == letter) ^ (pwd[nums[1]-1] == letter)"}
 
 # Read in file line by line
-with open("rsc/2_passwords.txt") as password_file:
+with open("rsc/02_passwords.txt") as password_file:
     passwords = password_file.read().split("\n")
 
 range_valid_count, position_valid_count = 0, 0

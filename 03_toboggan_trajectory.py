@@ -12,7 +12,7 @@ def count_routes_trees(hill_map, down_step, right_step):
 
 
 # Load in map as binary array, Tree ("#") = 1, Clear (".") = 0
-with open("rsc/3_toboggan_map.txt") as map:
+with open("rsc/03_toboggan_map.txt") as map:
     map_store = np.array([list(line) for line in map.read().split("\n")])
     map_store[np.where(map_store == "#")] = 1
     map_store[np.where(map_store == ".")] = 0

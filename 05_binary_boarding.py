@@ -29,7 +29,7 @@ ROW_TREE = Tree(0, 127)
 COL_TREE = Tree(0, 7)
 
 # Read in boarding pass data
-with open("rsc/5_boarding_passes.txt") as boarding_passes:
+with open("rsc/05_boarding_passes.txt") as boarding_passes:
     passes = boarding_passes.read().split("\n")
 
 # Calculate the seat ids for each

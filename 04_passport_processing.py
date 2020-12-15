@@ -32,7 +32,7 @@ FIELD_RULES = {
 }
 
 # Read in passports
-with open("rsc/4_passports.txt") as pass_file:
+with open("rsc/04_passports.txt") as pass_file:
     passports = pass_file.read().split("\n\n")
 
 # Iterate over the entries, clean, and determine if valid

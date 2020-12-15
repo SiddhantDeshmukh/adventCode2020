@@ -12,7 +12,7 @@ def target_sum_product(number_list, target_sum=2020, n = 2):
 
 
 # Read in expenses
-with open("rsc/1_expenses.txt") as expenses_file:
+with open("rsc/01_expenses.txt") as expenses_file:
     expenses = [int(n) for n in expenses_file.read().split("\n")]
 
 # Problem Solutions

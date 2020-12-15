@@ -33,7 +33,7 @@ COMMAND_DICT = {"acc": ["acc + inst.value", "index + 1"],
 FLIP_DICT = {"acc":"acc", "jmp":"nop", "nop":"jmp"}
 
 # Read in bootcode
-with open("rsc/8_bootcode.txt") as boot: 
+with open("rsc/08_bootcode.txt") as boot: 
     bootcode = boot.read().split("\n")
 
 # Parse bootcode commands
