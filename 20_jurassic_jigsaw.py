@@ -38,7 +38,7 @@ class Jigsaw:
                 # Flip or rotate the tile, flip if rotate is 0
                 if rot == 0: tile.flip()
                 else: tile.rotate_90(rot)
-                # Look over all edges to identify matches and check DIRS                
+                # Look over all edges to identify matches and check directions                
                 for dir1, edge in tile.all_edges.items():
                     for dir2, in_edge in jigsaw_tile.all_edges.items():
                         if edge == in_edge and dir1 == DIRS[dir2]["opposite"]:
@@ -144,4 +144,4 @@ non_monster_hashes = np.count_nonzero(clean_grid == "#") - (15*monster_count)
 
 # Problem Solutions
 print(f"Part 1: Product of corner IDs = {corner_product}")
-print(f"Part 2: Roughness of sea (number of # just sea) = {non_monster_hashes}")
+print(f"Part 2: Sea roughness (number of # just sea) = {non_monster_hashes}")
