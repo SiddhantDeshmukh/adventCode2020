@@ -13,16 +13,13 @@ class Tile:
     def all_edges(self):
         edges = [self.contents[0, :], self.contents[-1, :], 
                  self.contents[:, 0], self.contents[:, -1]]
-        return {d: "".join(s) for d, s in zip(DIRECTIONS.keys(), edges)}
+        return {d: "".join(s) for d, s in zip(DIRS.keys(), edges)}
 
     def rotate_90(self, num_turns=0):
         self.contents = np.rot90(self.contents, k=num_turns)
     
     def flip(self):
         self.contents = np.fliplr(self.contents)
-
-    def __str__(self):
-        return "\n".join(" ".join(s) for s in self.contents)
 
     def copy(self):
         return Tile(self.id, self.contents, self.location)
@@ -41,12 +38,12 @@ class Jigsaw:
                 # Flip or rotate the tile, flip if rotate is 0
                 if rot == 0: tile.flip()
                 else: tile.rotate_90(rot)
-                # Look over all edges to identify matches and check directions                
+                # Look over all edges to identify matches and check DIRS                
                 for dir1, edge in tile.all_edges.items():
                     for dir2, in_edge in jigsaw_tile.all_edges.items():
-                        if edge == in_edge and dir1 == OPPOSITES[dir2]:
+                        if edge == in_edge and dir1 == DIRS[dir2]["opposite"]:
                             # If this is a match, calculate new location 
-                            new_loc = jigsaw_tile.location + DIRECTIONS[dir2]
+                            new_loc = jigsaw_tile.location + DIRS[dir2]["step"]
                             tile.location = new_loc
                             # Add this tile in, if not in already
                             if tile.id not in [s.id for s in self.saved_tiles]: 
@@ -96,15 +93,13 @@ class Jigsaw:
         seamon = [["                  # "],
           ["#    ##    ##    ###"],
           [" #  #  #  #  #  #   "]]
-        seamon_hash = [(y, x) 
-                        for y in range(len(seamon)) 
-                        for x in range(len(seamon[y][0])) 
-                        if seamon[y][0][x] == "#"]
+        seamon_hash = [(y, x) for y in range(len(seamon)) 
+                              for x in range(len(seamon[y][0])) 
+                              if seamon[y][0][x] == "#"]
         monster_count = 0
         g = self.get_full_grid(remove_border=True)
         # Iterate over all possible tile flips and rotations
         for rot in list(range(4)) * 2:
-            # Flip or rotate the tile, flip if rotate is 0
             if rot == 0: g = np.fliplr(g)
             else: g = np.rot90(g, k=rot)
             # Try all valid start positions 
@@ -119,15 +114,10 @@ class Jigsaw:
         return "\n".join("".join(row) for row in self.get_full_grid(sep=1))
 
 
-DIRECTIONS = {"top": np.array([-1, 0]),
-              "bottom": np.array([1, 0]),
-              "left": np.array([0, -1]),
-              "right": np.array([0, 1])}
-
-OPPOSITES = {"top": "bottom",
-             "bottom": "top",
-             "left": "right", 
-             "right": "left"}
+DIRS = {"top": {"step": np.array([-1, 0]), "opposite": "bottom"},
+        "bottom": {"step": np.array([1, 0]), "opposite": "top"},
+        "left": {"step": np.array([0, -1]), "opposite": "right"},
+        "right": {"step": np.array([0, 1]), "opposite": "left"}}
 
 # Read in the satellite images
 with open("rsc/20_satellite_image.txt") as sat:
@@ -146,10 +136,8 @@ while len(j.saved_tiles) < len(list(tile_dict.keys())):
     for tile in tile_dict:
         if tile not in [t.id for t in j.saved_tiles]:
             j.check_edge_match(tile_dict[tile])
-
 # Get the corner ID's by generating the ID array
 grid, corner_product = j.get_id_grid()
-
 # Count SEA MONSTERS
 clean_grid, monster_count = j.detect_monsters()
 non_monster_hashes = np.count_nonzero(clean_grid == "#") - (15*monster_count)
