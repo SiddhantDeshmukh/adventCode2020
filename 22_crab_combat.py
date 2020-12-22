@@ -20,9 +20,10 @@ def RecursiveCombat(deck1, deck2):
     """Run main game loop for recursive combat"""
     deck1_history, deck2_history = [], []
     while len(deck1) != 0 and len(deck2) != 0:
+        
+        # Check if these decks have appeared in this game's history
         deck1_str = "".join(str(n) for n in deck1)
         deck2_str = "".join(str(n) for n in deck2)
-        # Check if these decks have appeared in this game's history
         if deck1_str in deck1_history or deck2_str in deck2_history:
             # Player 1 wins
             deck2 = []; break
@@ -31,7 +32,7 @@ def RecursiveCombat(deck1, deck2):
             deck1_history.append(deck1_str)
             deck2_history.append(deck2_str)
 
-        # Otherwise, Compare first numbers
+        # Otherwise, get and clear first numbers
         d1 = deck1[0]; del deck1[0]
         d2 = deck2[0]; del deck2[0]
         
