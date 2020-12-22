@@ -17,8 +17,7 @@ with open("rsc/21_allergen_notes.txt") as allergen_notes:
         all_ingredients.update(ingredients)
         all_allergens.update(allergens)
         # Update counts
-        for ing in ingredients:
-            ingredient_counts[ing] += 1
+        for ing in ingredients: ingredient_counts[ing] += 1
 
 # Find the list of potential allergens from this data
 potential_allergens = set()
@@ -40,7 +39,7 @@ not_allergen_counts = sum(ingredient_counts[n] for n in not_allergens)
 
 from pprint import pprint
 # Time to sieve out the solution!
-sorted_al = {s:list(allergen_dict[s]) for s in sorted(allergen_dict, key= lambda key: len(allergen_dict[key]))}
+sorted_al = {s:list(allergen_dict[s]) for s in sorted(allergen_dict, key=lambda key: len(allergen_dict[key]))}
 save_al = {}
 # For each of the elements in the dictionary
 for v in range(len(sorted_al)):
