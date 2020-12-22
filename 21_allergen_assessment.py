@@ -20,8 +20,7 @@ with open("rsc/21_allergen_notes.txt") as allergen_notes:
         for ing in ingredients: ingredient_counts[ing] += 1
 
 # Find the list of potential allergens from this data
-potential_allergens = set()
-allergen_dict = {}
+potential_allergens, allergen_dict = set(), {}
 for allergen in all_allergens:
     # Count ingredients that could be allergen containing
     poss = [set(line[0]) for line in all_data if allergen in line[1]]
