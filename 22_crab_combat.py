@@ -57,7 +57,6 @@ def RecursiveCombat(deck1, deck2):
 
 # Load in the two decks
 with open("rsc/22_card_decks.txt") as decks:
-# with open("rsc/22_example.txt") as decks:
     deck1, deck2 = decks.read().split("\n\n")
     deck1 = list(map(int, deck1.split("\n")[1:]))
     deck2 = list(map(int, deck2.split("\n")[1:]))
